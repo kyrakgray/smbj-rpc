@@ -27,6 +27,8 @@ Table of contents
 
 # Usage Examples
 
+Requires Java 17 or newer.
+
 Add to your pom.xml:
 
 ```xml
