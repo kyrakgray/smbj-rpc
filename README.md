@@ -1,6 +1,6 @@
 # SMBJ-RPC
 
- [![Build Status](https://github.com/rapid7/smbj-rpc/actions/workflows/CI.yml/badge.svg)](https://github.com/rapid7/smbj-rpc/actions) [![Maven Central](https://img.shields.io/maven-central/v/com.rapid7.client/dcerpc.svg)](https://search.maven.org/artifact/com.rapid7.client/dcerpc) [![Javadocs](https://www.javadoc.io/badge/com.rapid7.client/dcerpc.svg)](https://www.javadoc.io/doc/com.rapid7.client/dcerpc)
+ [![Build Status](https://github.com/rapid7/smbj-rpc/actions/workflows/CI.yml/badge.svg)](https://github.com/rapid7/smbj-rpc/actions) [![Maven Central](https://img.shields.io/maven-central/v/com.rapid7.client/dcerpc.svg)](https://search.maven.org/artifact/com.rapid7.client/dcerpc) [![Javadocs](https://www.javadoc.io/badge/com.rapid7.client/dcerpc.svg)](https://www.javadoc.io/doc/com.rapid7.client/dcerpc) [![Java 17+](https://img.shields.io/badge/Java-17%2B-blue.svg)](https://openjdk.org/projects/jdk/17/)
 
 DCE-RPC implementation capable of using SMBv2 via SMBJ to invoke remote procedure calls (RPC) over the IPC$ named pipe.
 
