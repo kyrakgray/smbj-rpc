@@ -68,7 +68,7 @@ import com.rapid7.client.dcerpc.messages.RequestCall;
  * Return Values: The method returns 0 (ERROR_SUCCESS) to indicate success; otherwise, it returns a nonzero error code,
  * as specified in {@link com.rapid7.client.dcerpc.mserref.SystemErrorCode} in [MS-ERREF]. The most common error codes
  * are listed in the following table.
- * <table border="1" summary="">
+ * <table border="1">
  * <tr>
  * <td>ERROR_ACCESS_DENIED (0x00000005)</td>
  * <td>The caller does not have KEY_QUERY_VALUE access rights.</td>
