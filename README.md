@@ -8,6 +8,8 @@ Partial support for the Windows Remote Registry Protocol (MS-RRP) specification 
 
 Special thank you to Jeroen van Erp for SMBJ (https://github.com/hierynomus/smbj).
 
+Requires Java 17 or later.
+
 Table of contents
 =================
 * [Usage Examples](#usage-examples)
