@@ -41,10 +41,9 @@
       <thirdparty.junit.version>5.7.2</thirdparty.junit.version>
       <thirdparty.mockito.version>1.10.19</thirdparty.mockito.version>
       <thirdparty.smbj.version>0.14.0</thirdparty.smbj.version>
-      <thirdparty.testng.version>6.11</thirdparty.testng.version>
+      <thirdparty.testng.version>7.12.0</thirdparty.testng.version>
       <thirdparty.testcontainers.version>1.16.0</thirdparty.testcontainers.version>
-      <maven.compiler.target>1.8</maven.compiler.target>
-      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.release>17</maven.compiler.release>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
 
@@ -156,20 +155,19 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.7.0</version>
+            <version>3.16.0</version>
             <configuration>
-               <source>${maven.compiler.source}</source>
-               <target>${maven.compiler.target}</target>
+               <release>${maven.compiler.release}</release>
             </configuration>
          </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.22.2</version>
+            <version>3.6.0</version>
          </plugin>
           <plugin>
               <artifactId>maven-failsafe-plugin</artifactId>
-              <version>3.0.0-M5</version>
+              <version>3.6.0</version>
               <configuration>
                   <testSourceDirectory>src/integration-test/java</testSourceDirectory>
               </configuration>
@@ -185,7 +183,7 @@
           <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>build-helper-maven-plugin</artifactId>
-              <version>3.1.0</version>
+              <version>3.6.2</version>
               <executions>
                   <execution>
                       <id>add-test-source</id>
@@ -232,7 +230,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.4.0</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -245,7 +243,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
+                        <version>3.12.0</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -258,7 +256,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
