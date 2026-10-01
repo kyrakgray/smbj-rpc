@@ -68,6 +68,8 @@ import com.rapid7.client.dcerpc.io.ndr.Alignment;
  * @see <a href=http://pubs.opengroup.org/onlinepubs/009629399/chap12.htm>CDE 1.1: Remote Procedure Call</a>
  */
 public final class Response extends Header {
+    private static final int RESPONSE_HEADER_LENGTH = 24;
+
     private byte[] stub;
 
     public Response() {
@@ -97,7 +99,8 @@ public final class Response extends Header {
     @Override
     public void unmarshal(final PacketInput packetIn) throws IOException {
         super.unmarshal(packetIn);
-        setStub(new byte[getFragLength() - getAuthLength() - 24]);
+        checkFragLength(RESPONSE_HEADER_LENGTH);
+        setStub(new byte[getFragLength() - getAuthLength() - RESPONSE_HEADER_LENGTH]);
         packetIn.fullySkipBytes(8);
         packetIn.readFully(getStub());
         packetIn.fullySkipBytes(getAuthLength());

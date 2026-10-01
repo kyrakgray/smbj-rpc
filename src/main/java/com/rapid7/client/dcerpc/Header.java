@@ -43,6 +43,8 @@ import static com.hierynomus.protocol.commons.EnumWithValue.EnumUtils.*;
  * @see <a href=http://pubs.opengroup.org/onlinepubs/009629399/chap12.htm>CDE 1.1: Remote Procedure Call</a>
  */
 public class Header extends HexifyImpl implements Packet, Hexify {
+    public static final int HEADER_LENGTH = 16;
+
     private byte majorVersion = 5;
     private byte minorVersion = 0;
     private PDUType pduType;
@@ -73,11 +75,11 @@ public class Header extends HexifyImpl implements Packet, Hexify {
     }
 
     public int getFragLength() {
-        return fragLength;
+        return fragLength & 0xFFFF;
     }
 
     public int getAuthLength() {
-        return authLength;
+        return authLength & 0xFFFF;
     }
 
     public int getCallID() {
@@ -168,5 +170,20 @@ public class Header extends HexifyImpl implements Packet, Hexify {
         setFragLength(packetIn.readShort());
         setAuthLength(packetIn.readShort());
         setCallID(packetIn.readInt());
+        checkFragLength(HEADER_LENGTH);
+    }
+
+    /**
+     * Ensures the fragment is large enough to hold a fixed-size PDU header of the given length plus the
+     * authentication verifier.
+     *
+     * @param headerLength The fixed header length of the PDU, in bytes.
+     * @throws IOException If frag_length is smaller than headerLength + auth_length.
+     */
+    protected void checkFragLength(final int headerLength) throws IOException {
+        if (getFragLength() < headerLength + getAuthLength()) {
+            throw new IOException(String.format("Invalid fragment length %d for %s PDU (header length %d, auth length %d)",
+                getFragLength(), getPDUType(), headerLength, getAuthLength()));
+        }
     }
 }

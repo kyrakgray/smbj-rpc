@@ -19,11 +19,16 @@
 package com.rapid7.client.dcerpc.messages;
 
 import java.io.IOException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
 public class Test_BindResponse {
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void ackResponse() throws IOException {
         // Distributed Computing Environment / Remote Procedure Call (DCE/RPC) Bind_ack, Fragment: Single, FragLen: 68,
@@ -51,5 +56,29 @@ public class Test_BindResponse {
         assertFalse(response.isNAK());
         assertEquals(4096, response.getMaxXmitFrag());
         assertEquals(4096, response.getMaxRecvFrag());
+    }
+
+    @Test
+    public void ackFragLengthTooSmall() throws IOException {
+        thrown.expect(IOException.class);
+        thrown.expectMessage("Invalid fragment length 16 for BIND_ACK PDU");
+
+        new BindResponse().fromHexString("05000c031000000010000000010000000010001000000000");
+    }
+
+    @Test
+    public void nakFragLengthSmallerThanAuthLength() throws IOException {
+        thrown.expect(IOException.class);
+        thrown.expectMessage("Invalid fragment length 16 for BIND_NAK PDU");
+
+        new BindResponse().fromHexString("05000d031000000010000400010000000000");
+    }
+
+    @Test
+    public void nakFragLengthTooSmall() throws IOException {
+        thrown.expect(IOException.class);
+        thrown.expectMessage("Invalid fragment length 0 for BIND_NAK PDU");
+
+        new BindResponse().fromHexString("05000d03100000000000000001000000");
     }
 }

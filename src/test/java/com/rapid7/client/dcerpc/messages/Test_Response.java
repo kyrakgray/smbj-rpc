@@ -72,4 +72,32 @@ public class Test_Response {
         assertEquals(1, response.getCallID());
         assertArrayEquals(new byte[0], response.getStub());
     }
+
+    @Test
+    public void unmarshalFragLengthTooSmall() throws IOException {
+        thrown.expect(IOException.class);
+        thrown.expectMessage("Invalid fragment length 16");
+
+        new Response().fromHexString("050002031000000010000000010000000000000000000000");
+    }
+
+    @Test
+    public void unmarshalFragLengthSmallerThanAuthLength() throws IOException {
+        thrown.expect(IOException.class);
+        thrown.expectMessage("Invalid fragment length 24");
+
+        new Response().fromHexString("050002031000000018001000010000000000000000000000");
+    }
+
+    @Test
+    public void unmarshalFragLengthUnsigned() throws IOException {
+        final Response response = new Response();
+        thrown.expect(IOException.class);
+
+        try {
+            response.fromHexString("05000203100000001880000001000000000000000000000000");
+        } finally {
+            assertEquals(0x8018, response.getFragLength());
+        }
+    }
 }

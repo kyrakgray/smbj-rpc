@@ -103,6 +103,9 @@ import static com.rapid7.client.dcerpc.PDUType.BIND_NAK;
  * @see <a href=http://pubs.opengroup.org/onlinepubs/009629399/chap12.htm>CDE 1.1: Remote Procedure Call</a>
  */
 public final class BindResponse extends Header {
+    private static final int BIND_ACK_HEADER_LENGTH = 20;
+    private static final int BIND_NAK_HEADER_LENGTH = 16;
+
     private short maxXmitFrag;
     private short maxRecvFrag;
 
@@ -155,12 +158,14 @@ public final class BindResponse extends Header {
 
         switch (getPDUType()) {
             case BIND_ACK:
+                checkFragLength(BIND_ACK_HEADER_LENGTH);
                 maxXmitFrag = packetIn.readShort();
                 maxRecvFrag = packetIn.readShort();
-                packetIn.fullySkipBytes(getFragLength() - 20);
+                packetIn.fullySkipBytes(getFragLength() - BIND_ACK_HEADER_LENGTH);
                 break;
             case BIND_NAK:
-                packetIn.fullySkipBytes(getFragLength() - 16);
+                checkFragLength(BIND_NAK_HEADER_LENGTH);
+                packetIn.fullySkipBytes(getFragLength() - BIND_NAK_HEADER_LENGTH);
                 break;
             default:
                 throw new IOException("Invalid PDU type: " + getPDUType());
