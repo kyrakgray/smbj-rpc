@@ -30,9 +30,7 @@ public class SMBTransport extends RPCTransport {
 
     @Override
     public int transact(final byte[] packetOut, final byte[] packetIn) throws IOException {
-        final byte[] packetInBytes = namedPipe.transact(packetOut);
-        System.arraycopy(packetInBytes, 0, packetIn, 0, packetInBytes.length);
-        return packetInBytes.length;
+        return copyPacketIn(namedPipe.transact(packetOut), packetIn);
     }
 
     @Override
@@ -42,7 +40,13 @@ public class SMBTransport extends RPCTransport {
 
     @Override
     public int read(final byte[] packetIn) throws IOException {
-        final byte[] packetInBytes = namedPipe.read();
+        return copyPacketIn(namedPipe.read(), packetIn);
+    }
+
+    private static int copyPacketIn(final byte[] packetInBytes, final byte[] packetIn) throws IOException {
+        if (packetInBytes.length > packetIn.length) {
+            throw new IOException(String.format("Response packet length %d exceeds receive buffer size %d.", packetInBytes.length, packetIn.length));
+        }
         System.arraycopy(packetInBytes, 0, packetIn, 0, packetInBytes.length);
         return packetInBytes.length;
     }
