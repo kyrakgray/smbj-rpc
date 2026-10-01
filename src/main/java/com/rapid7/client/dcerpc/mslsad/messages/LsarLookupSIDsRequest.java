@@ -26,7 +26,7 @@ import com.rapid7.client.dcerpc.mslsad.objects.LSAPRSIDEnumBuffer;
 import com.rapid7.client.dcerpc.objects.RPCSID;
 
 /**
- *    <h1 class="title">3.1.4.11 LsarLookupSids (Opnum 15)</h1>
+ *    <h2 class="title">3.1.4.11 LsarLookupSids (Opnum 15)</h2>
  *
  *   <div id="mainSection">
  *             <div id="mainBody">

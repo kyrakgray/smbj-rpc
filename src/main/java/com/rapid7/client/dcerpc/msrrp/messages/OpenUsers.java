@@ -44,7 +44,8 @@ package com.rapid7.client.dcerpc.msrrp.messages;
  * Return Values: The method returns 0 (ERROR_SUCCESS) to indicate success; otherwise, it returns a nonzero error code,
  * as specified in Win32Error Codes in [MS-ERREF]. The server SHOULD return without modification any error code
  * encountered in servicing the client request. The most common error codes are listed in the following table.
- * <table border="1" summary="">
+ * <table border="1">
+ * <caption>Return values</caption>
  * <tr>
  * <td>Return value/code</td>
  * <td>Description</td>
