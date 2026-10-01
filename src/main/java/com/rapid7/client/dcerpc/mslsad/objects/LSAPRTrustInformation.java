@@ -31,7 +31,7 @@ import java.util.Objects;
 
 /**
  *  Documentation from https://msdn.microsoft.com/en-us/library/cc234259.aspx
- *  <h1 class="title">2.2.7.1 LSAPR_TRUST_INFORMATION</h1>
+ *  <h2 class="title">2.2.7.1 LSAPR_TRUST_INFORMATION</h2>
  *
  *
  *  <p>The LSAPR_TRUST_INFORMATION structure identifies a <a href="https://msdn.microsoft.com/en-us/library/cc234227.aspx#gt_b0276eb2-4e65-4cf1-a718-e0920a614aca">domain</a>.</p>

@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 /**
  *   Documentation from https://msdn.microsoft.com/en-us/library/cc234453.aspx
- *   <h1 class="title">2.2.12 LSAPR_REFERENCED_DOMAIN_LIST</h1>
+ *   <h2 class="title">2.2.12 LSAPR_REFERENCED_DOMAIN_LIST</h2>
  *
  *  <p>The LSAPR_REFERENCED_DOMAIN_LIST structure contains
  *  information about the <a href="https://msdn.microsoft.com/en-us/library/cc234422.aspx#gt_b0276eb2-4e65-4cf1-a718-e0920a614aca">domains</a>
