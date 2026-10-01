@@ -23,6 +23,7 @@ package com.rapid7.client.dcerpc.mssamr.objects;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.rmi.UnmarshalException;
 import org.bouncycastle.util.encoders.Hex;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -121,8 +122,6 @@ public class Test_SAMPRLogonHours {
                 {"0800 FFFF 01000000", 0, (short) 8, new char[1]},
                 // UnitsPerWeek: 167, Alignment: 2b, LogonHoursRef: 1
                 {"A900 FFFF 01000000", 0, (short) 169, new char[22]},
-                // UnitsPerWeek: 167, Alignment: 2b, LogonHoursRef: 1
-                {"6127 FFFF 01000000", 0, (short) 10081, new char[1261]},
 
                 // Alignments
                 // Days -> UnitsPerWeek: 7, Alignment: 2b, LogonHoursRef: 1
@@ -150,6 +149,24 @@ public class Test_SAMPRLogonHours {
             assertNull(obj.getLogonHours());
         }
         assertEquals(bout.available(), 0);
+    }
+
+    @DataProvider
+    public Object[][] data_unmarshalEntity_invalidUnitsPerWeek() {
+        return new Object[][] {
+                // UnitsPerWeek: 10081
+                {"6127 FFFF 01000000"},
+                // UnitsPerWeek: 32768 (high bit set)
+                {"0080 FFFF 01000000"},
+                // UnitsPerWeek: 65535
+                {"FFFF FFFF 01000000"},
+        };
+    }
+
+    @Test(dataProvider = "data_unmarshalEntity_invalidUnitsPerWeek", expectedExceptions = UnmarshalException.class)
+    public void test_unmarshalEntity_invalidUnitsPerWeek(String hex) throws IOException {
+        PacketInput in = new PacketInput(new ByteArrayInputStream(Hex.decode(hex)));
+        new SAMPRLogonHours().unmarshalEntity(in);
     }
 
     @DataProvider

@@ -22,6 +22,7 @@
 package com.rapid7.client.dcerpc.mssamr.objects;
 
 import java.io.IOException;
+import java.rmi.UnmarshalException;
 import java.util.Arrays;
 import com.rapid7.client.dcerpc.io.PacketInput;
 import com.rapid7.client.dcerpc.io.ndr.Alignment;
@@ -43,6 +44,8 @@ import com.rapid7.client.dcerpc.io.ndr.Unmarshallable;
  *  For example, if the UnitsPerWeek value is 168 (that is, the units per week is hours, resulting in a 21-byte bit field), and if the leftmost bit is set and the rightmost bit is set, the user is able to log on for two consecutive hours between Saturday, 11 P.M. and Sunday, 1 A.M.</pre></blockquote>
  */
 public class SAMPRLogonHours implements Unmarshallable {
+    private static final int MAX_UNITS_PER_WEEK = 10080;
+
     // <NDR: unsigned short> unsigned short UnitsPerWeek;
     private short unitsPerWeek;
     // <NDR: pointer> [size_is(1260), length_is((UnitsPerWeek+7)/8)] unsigned char* LogonHours;
@@ -75,7 +78,11 @@ public class SAMPRLogonHours implements Unmarshallable {
         in.align(Alignment.FOUR);
         // <NDR: unsigned short> unsigned short UnitsPerWeek;
         // Alignment: 2 - Already aligned
-        this.unitsPerWeek = in.readShort();
+        final int units = in.readUnsignedShort();
+        if (units > MAX_UNITS_PER_WEEK) {
+            throw new UnmarshalException(String.format("UnitsPerWeek %d > %d", units, MAX_UNITS_PER_WEEK));
+        }
+        this.unitsPerWeek = (short) units;
         // <NDR: pointer> [size_is(1260), length_is((UnitsPerWeek+7)/8)] unsigned char* LogonHours;
         in.fullySkipBytes(2); // Alignment: 4 - Wrote exactly two bytes above since alignment
         if (in.readReferentID() != 0) {
