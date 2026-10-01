@@ -184,7 +184,8 @@ public class BaseRegOpenKey extends RequestCall<HandleResponse> {
      * Registry key options. The user rights are represented as a bit field. In addition to the standard user rights, as
      * specified in [MS-DTYP] section 2.4.3, the Windows Remote Registry Protocol SHOULD support the following user
      * rights.
-     * <table border="1" summary="">
+     * <table border="1">
+     * <caption>Registry key options</caption>
      * <tr>
      * <td>Value</td>
      * <td>Meaning</td>
@@ -209,7 +210,8 @@ public class BaseRegOpenKey extends RequestCall<HandleResponse> {
     private final int options;
     /**
      * A bit field that describes the requested security access for the handle to the key that is being opened.
-     * <table border="1" summary="">
+     * <table border="1">
+     * <caption>Access rights</caption>
      * <tr>
      * <td>Value</td>
      * <td>Meaning</td>
@@ -261,7 +263,8 @@ public class BaseRegOpenKey extends RequestCall<HandleResponse> {
      * @param options    Registry key options. The user rights are represented as a bit field. In addition to the standard
      *                   user rights, as specified in [MS-DTYP] section 2.4.3, the Windows Remote Registry Protocol SHOULD support
      *                   the following user rights.
-     *                   <table border="1" summary="">
+     *                   <table border="1">
+     *                   <caption>Return values</caption>
      *                   <tr>
      *                   <td>Value</td>
      *                   <td>Meaning</td>
@@ -285,7 +288,8 @@ public class BaseRegOpenKey extends RequestCall<HandleResponse> {
      *                   </table>
      * @param accessMask A bit field that describes the requested security access for the handle to the key that is
      *                   being opened.
-     *                   <table border="1" summary="">
+     *                   <table border="1">
+     *                   <caption>Return values</caption>
      *                   <tr>
      *                   <td>Value</td>
      *                   <td>Meaning</td>
