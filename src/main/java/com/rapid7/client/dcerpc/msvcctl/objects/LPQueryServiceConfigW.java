@@ -47,6 +47,8 @@ import com.rapid7.client.dcerpc.objects.WChar;
  */
 public class LPQueryServiceConfigW implements Unmarshallable {
     private static final String[] EMPTY_DEPENDENCIES = new String[0];
+    // range(0, 8 * 1024)
+    private static final int MAX_STRING_LENGTH = 8 * 1024;
 
     // <NDR: unsigned long> DWORD dwServiceType;
     private int dwServiceType;
@@ -196,10 +198,10 @@ public class LPQueryServiceConfigW implements Unmarshallable {
     public void unmarshalDeferrals(PacketInput in) throws IOException {
         // <NDR: pointer[struct]> [string,range(0, 8 * 1024)] LPWSTR lpBinaryPathName;
         if (this.lpBinaryPathName != null)
-            in.readUnmarshallable(this.lpBinaryPathName);
+            readBoundedString(in, this.lpBinaryPathName);
         // <NDR: pointer[struct]> [string,range(0, 8 * 1024)] LPWSTR lpLoadOrderGroup;
         if (this.lpLoadOrderGroup != null)
-            in.readUnmarshallable(this.lpLoadOrderGroup);
+            readBoundedString(in, this.lpLoadOrderGroup);
         // <NDR: pointer[struct]> [string,range(0, 8 * 1024)] LPWSTR lpDependencies;
         if (this.lpDependencies != null) {
             /*
@@ -219,16 +221,21 @@ public class LPQueryServiceConfigW implements Unmarshallable {
             //      e.g. "SamSS/NTDS/"
             // Therefore, we will read this as if it were a single string, and use '/' as our delimiter.
             final WChar.NullTerminated lpDependency = new WChar.NullTerminated();
-            in.readUnmarshallable(lpDependency);
+            readBoundedString(in, lpDependency);
             // String.split does not use a regex for single character expressions, so this is efficient enough
             this.lpDependencies = lpDependency.getValue().split("/");
         }
         // <NDR: pointer[struct]> [string,range(0, 8 * 1024)] LPWSTR lpServiceStartName;
         if (this.lpServiceStartName != null)
-            in.readUnmarshallable(this.lpServiceStartName);
+            readBoundedString(in, this.lpServiceStartName);
         // <NDR: pointer[struct]> [string,range(0, 8 * 1024)] LPWSTR lpDisplayName;
         if (this.lpDisplayName != null)
-            in.readUnmarshallable(this.lpDisplayName);
+            readBoundedString(in, this.lpDisplayName);
+    }
+
+    private static void readBoundedString(PacketInput in, WChar.NullTerminated wChar) throws IOException {
+        wChar.setMaximumLength(MAX_STRING_LENGTH);
+        in.readUnmarshallable(wChar);
     }
 
     @Override

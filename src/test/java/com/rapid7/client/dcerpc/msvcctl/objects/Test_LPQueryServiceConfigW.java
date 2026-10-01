@@ -23,6 +23,7 @@ package com.rapid7.client.dcerpc.msvcctl.objects;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.rmi.UnmarshalException;
 import org.bouncycastle.util.encoders.Hex;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -346,5 +347,56 @@ public class Test_LPQueryServiceConfigW {
         obj.unmarshalDeferrals(in);
         assertEquals(bin.available(), 0);
         assertEquals(obj, expect);
+    }
+
+    @DataProvider
+    public Object[][] data_unmarshalDeferrals_fields() {
+        return new Object[][] {{0}, {1}, {2}, {3}, {4}};
+    }
+
+    @Test(dataProvider = "data_unmarshalDeferrals_fields",
+            expectedExceptions = {UnmarshalException.class},
+            expectedExceptionsMessageRegExp = "ActualCount 8193 > 8192")
+    public void test_unmarshalDeferrals_exceedsRange(int field) throws IOException {
+        // MaximumCount=8193, Offset=0, ActualCount=8193
+        String hex = "01200000 00000000 01200000";
+        PacketInput in = new PacketInput(new ByteArrayInputStream(Hex.decode(hex)));
+        createWithField(field).unmarshalDeferrals(in);
+    }
+
+    @Test(dataProvider = "data_unmarshalDeferrals_fields")
+    public void test_unmarshalDeferrals_atRange(int field) throws IOException {
+        StringBuilder hex = new StringBuilder("00200000 00000000 00200000");
+        StringBuilder value = new StringBuilder();
+        for (int i = 0; i < 8191; i++) {
+            hex.append("6100");
+            value.append('a');
+        }
+        hex.append("0000");
+        ByteArrayInputStream bin = new ByteArrayInputStream(Hex.decode(hex.toString()));
+        PacketInput in = new PacketInput(bin);
+        LPQueryServiceConfigW obj = createWithField(field);
+        obj.unmarshalDeferrals(in);
+        assertEquals(bin.available(), 0);
+        String expect = value.toString();
+        switch (field) {
+            case 0: assertEquals(obj.getLpBinaryPathName().getValue(), expect); break;
+            case 1: assertEquals(obj.getLpLoadOrderGroup().getValue(), expect); break;
+            case 2: assertEquals(obj.getLpDependencies(), new String[]{expect}); break;
+            case 3: assertEquals(obj.getLpServiceStartName().getValue(), expect); break;
+            default: assertEquals(obj.getLpDisplayName().getValue(), expect); break;
+        }
+    }
+
+    private LPQueryServiceConfigW createWithField(int field) {
+        LPQueryServiceConfigW obj = new LPQueryServiceConfigW();
+        switch (field) {
+            case 0: obj.setLpBinaryPathName(new WChar.NullTerminated()); break;
+            case 1: obj.setLpLoadOrderGroup(new WChar.NullTerminated()); break;
+            case 2: obj.setLpDependencies(new String[0]); break;
+            case 3: obj.setLpServiceStartName(new WChar.NullTerminated()); break;
+            default: obj.setLpDisplayName(new WChar.NullTerminated()); break;
+        }
+        return obj;
     }
 }

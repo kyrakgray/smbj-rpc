@@ -86,6 +86,7 @@ public abstract class WChar implements Unmarshallable, Marshallable {
     // Stored for unmarshalling purposes only
     private int offset;
     private int actualCount;
+    private int maximumLength = Integer.MAX_VALUE;
 
     public abstract boolean isNullTerminated();
 
@@ -104,6 +105,24 @@ public abstract class WChar implements Unmarshallable, Marshallable {
             throw new IllegalArgumentException("Expected non-null value");
         }
         this.value = value;
+    }
+
+    /**
+     * @return The maximum number of UTF-16 code units (including any null terminator) accepted during unmarshalling.
+     */
+    public int getMaximumLength() {
+        return this.maximumLength;
+    }
+
+    /**
+     * @param maximumLength The maximum number of UTF-16 code units (including any null terminator)
+     *                      accepted during unmarshalling. Must not be negative.
+     */
+    public void setMaximumLength(int maximumLength) {
+        if (maximumLength < 0) {
+            throw new IllegalArgumentException("Expected non-negative maximumLength");
+        }
+        this.maximumLength = maximumLength;
     }
 
     @Override
@@ -151,6 +170,13 @@ public abstract class WChar implements Unmarshallable, Marshallable {
         // ActualCount for varying array
         // Alignment 4 - Already aligned
         this.actualCount = readIndex("ActualCount", in);
+        if (this.actualCount > this.maximumLength) {
+            throw new UnmarshalException(String.format("ActualCount %d > %d", this.actualCount, this.maximumLength));
+        }
+        if (this.offset > this.maximumLength - this.actualCount) {
+            throw new UnmarshalException(String.format("Offset %d + ActualCount %d > %d",
+                    this.offset, this.actualCount, this.maximumLength));
+        }
     }
 
     @Override

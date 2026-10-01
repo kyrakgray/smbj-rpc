@@ -21,6 +21,10 @@
 
 package com.rapid7.client.dcerpc.objects;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.rmi.UnmarshalException;
+import org.bouncycastle.util.encoders.Hex;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -29,6 +33,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
+
+import com.rapid7.client.dcerpc.io.PacketInput;
 
 public class Test_WChar {
 
@@ -137,5 +143,47 @@ public class Test_WChar {
 
     private WChar create(boolean nullTerminated) {
         return nullTerminated ? new WChar.NullTerminated() : new WChar.NonNullTerminated();
+    }
+
+    @Test(dataProvider = "data_isNullTerminated")
+    public void test_maximumLength_default(boolean nullTerminated) {
+        assertEquals(create(nullTerminated).getMaximumLength(), Integer.MAX_VALUE);
+    }
+
+    @Test(dataProvider = "data_isNullTerminated",
+            expectedExceptions = {IllegalArgumentException.class},
+            expectedExceptionsMessageRegExp = "Expected non-negative maximumLength")
+    public void test_setMaximumLength_negative(boolean nullTerminated) {
+        create(nullTerminated).setMaximumLength(-1);
+    }
+
+    @DataProvider
+    public Object[][] data_unmarshalEntity_maximumLength() {
+        return new Object[][] {
+                // Offset=0, ActualCount=3
+                {"00000000 03000000", 3, null},
+                // Offset=1, ActualCount=2
+                {"01000000 02000000", 3, null},
+                // Offset=0, ActualCount=4
+                {"00000000 04000000", 3, "ActualCount 4 > 3"},
+                // Offset=2, ActualCount=2
+                {"02000000 02000000", 3, "Offset 2 \\+ ActualCount 2 > 3"},
+                // Offset=0x7FFFFFFF, ActualCount=1
+                {"FFFFFF7F 01000000", Integer.MAX_VALUE, "Offset 2147483647 \\+ ActualCount 1 > 2147483647"},
+        };
+    }
+
+    @Test(dataProvider = "data_unmarshalEntity_maximumLength")
+    public void test_unmarshalEntity_maximumLength(String hex, int maximumLength, String error) throws IOException {
+        for (WChar wChar : new WChar[] {new WChar.NullTerminated(), new WChar.NonNullTerminated()}) {
+            wChar.setMaximumLength(maximumLength);
+            PacketInput in = new PacketInput(new ByteArrayInputStream(Hex.decode(hex)));
+            try {
+                wChar.unmarshalEntity(in);
+                assertTrue(error == null, "Expected UnmarshalException");
+            } catch (UnmarshalException e) {
+                assertTrue(error != null && e.getMessage().matches(error), e.getMessage());
+            }
+        }
     }
 }
