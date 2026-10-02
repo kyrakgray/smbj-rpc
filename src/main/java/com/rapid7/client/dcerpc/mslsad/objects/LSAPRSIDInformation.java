@@ -30,7 +30,7 @@ import java.io.IOException;
 /**
  * Documentation from https://msdn.microsoft.com/en-us/library/cc234459.aspx
  *
- * <h1 class="title">2.2.17 LSAPR_SID_INFORMATION</h1>
+ * <h2 class="title">2.2.17 LSAPR_SID_INFORMATION</h2>
  *
  * <p>The LSAPR_SID_INFORMATION structure contains a PRPC_SID
  * value.</p>

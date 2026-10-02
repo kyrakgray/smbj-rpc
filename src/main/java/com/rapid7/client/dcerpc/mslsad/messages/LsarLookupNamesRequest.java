@@ -25,7 +25,7 @@ import com.rapid7.client.dcerpc.messages.RequestCall;
 import com.rapid7.client.dcerpc.objects.RPCUnicodeString;
 
 /**
- *  <h1 class="title">3.1.4.8 LsarLookupNames (Opnum 14)</h1>
+ *  <h2 class="title">3.1.4.8 LsarLookupNames (Opnum 14)</h2>
  *  <div id="mainSection">
  *            <div id="mainBody">
  *                <div class="section" id="collapseableSection">
