@@ -32,7 +32,7 @@ import java.util.Objects;
  * <b>Alignment: 4</b>
  * Documentation from https://msdn.microsoft.com/en-us/library/cc234461.aspx
  *
- * <h1 class="title">2.2.19 LSAPR_TRANSLATED_NAME</h1>
+ * <h2 class="title">2.2.19 LSAPR_TRANSLATED_NAME</h2>
  *
  * <p>The LSAPR_TRANSLATED_NAME structure contains information
  * about a <a href="https://msdn.microsoft.com/en-us/library/cc234422.aspx#gt_f3ef2572-95cf-4c5c-b3c9-551fd648f409">security principal</a>,
