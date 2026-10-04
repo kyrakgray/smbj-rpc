@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 /**
  *  Documentation from https://msdn.microsoft.com/en-us/library/cc234462.aspx
- *  <h1 class="title">2.2.20 LSAPR_TRANSLATED_NAMES</h1>
+ *  <h2 class="title">2.2.20 LSAPR_TRANSLATED_NAMES</h2>
  *
  * <p>The LSAPR_TRANSLATED_NAMES structure defines a set of
  * translated names. This is used in the response to a translation request from <a href="https://msdn.microsoft.com/en-us/library/cc234422.aspx#gt_83f2020d-0804-4840-a5ac-e06439d50f8d">SIDs</a> to names.</p>
