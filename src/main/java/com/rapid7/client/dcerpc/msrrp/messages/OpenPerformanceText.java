@@ -42,7 +42,8 @@ package com.rapid7.client.dcerpc.msrrp.messages;
  * phKey: A pointer to a variable that receives a handle to the root key HKEY_PERFORMANCE_TEXT.<br>
  * <br>
  * Return Values: This method MUST always return a 0 (ERROR_SUCCESS), even in case of errors.
- * <table border="1" summary="">
+ * <table border="1">
+ * <caption>Return values</caption>
  * <tr>
  * <td>Return value/code</td>
  * <td>Description</td>
