@@ -43,7 +43,7 @@ package com.rapid7.client.dcerpc.msrrp.messages;
  * section 3.1.1.9.<br>
  * <br>
  * Return Values: This method MUST always return a 0 (ERROR_SUCCESS), even in case of errors.
- * <table border="1" summary="">
+ * <table border="1"><caption>Return values</caption>
  * <tr>
  * <td>Return value/code</td>
  * <td>Description</td>

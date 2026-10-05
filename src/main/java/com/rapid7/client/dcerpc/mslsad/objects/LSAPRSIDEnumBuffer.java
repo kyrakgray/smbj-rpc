@@ -27,7 +27,7 @@ import com.rapid7.client.dcerpc.objects.RPCSID;
 import java.io.IOException;
 
 /**
- * <h1 class="title">2.2.18 LSAPR_SID_ENUM_BUFFER</h1>
+ * <h2 class="title">2.2.18 LSAPR_SID_ENUM_BUFFER</h2>
  *
  * <p>The LSAPR_SID_ENUM_BUFFER structure defines a set of <a href="https://msdn.microsoft.com/en-us/library/cc234422.aspx#gt_83f2020d-0804-4840-a5ac-e06439d50f8d">SIDs</a>. This structure is
  * used during a translation request for a batch of SIDs to names.</p>
