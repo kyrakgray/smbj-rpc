@@ -38,7 +38,8 @@ public abstract class RequestResponse extends HexifyImpl implements Packet, Hexi
      * specified in {@link com.rapid7.client.dcerpc.mserref.SystemErrorCode} in [MS-ERREF]. The most common
      * error codes are listed in the following table.<br>
      * <br>
-     * <table border="1" summary="">
+     * <table border="1">
+     * <caption>Return values</caption>
      * <tr>
      * <td>Return value/code</td>
      * <td>Description</td>
