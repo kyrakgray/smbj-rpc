@@ -6,6 +6,8 @@ DCE-RPC implementation capable of using SMBv2 via SMBJ to invoke remote procedur
 
 Partial support for the Windows Remote Registry Protocol (MS-RRP) specification (https://msdn.microsoft.com/en-us/library/cc244877.aspx).
 
+Requires Java 17 or later.
+
 Special thank you to Jeroen van Erp for SMBJ (https://github.com/hierynomus/smbj).
 
 Table of contents
