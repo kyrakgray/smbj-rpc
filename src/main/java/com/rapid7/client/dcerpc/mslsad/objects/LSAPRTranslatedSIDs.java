@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 /**
  *  Documentation from https://msdn.microsoft.com/en-us/library/cc234457.aspx
- * <h1 class="title">2.2.15 LSAPR_TRANSLATED_SIDS</h1>
+ * <h2 class="title">2.2.15 LSAPR_TRANSLATED_SIDS</h2>
  *
  *  <p>The LSAPR_TRANSLATED_SIDS structure defines a set of
  *  translated <a href="https://msdn.microsoft.com/en-us/library/cc234422.aspx#gt_83f2020d-0804-4840-a5ac-e06439d50f8d">SIDs</a>.</p>
